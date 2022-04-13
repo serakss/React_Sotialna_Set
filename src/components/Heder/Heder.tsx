@@ -6,7 +6,7 @@ import {headerPropsType} from "./HederContainer";
 
 
 export const Header = (props: headerPropsType) => {
-    debugger
+
     return (
         <header className={s.header}>
             <img src="https://ichef.bbci.co.uk/news/640/cpsprodpb/FBD1/production/_115656446_eye1.jpg"/>
