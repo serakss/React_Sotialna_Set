@@ -1,4 +1,6 @@
 import React from "react";
+import { Dispatch } from "redux";
+import { usersAPI } from "../api/api";
 import {ActionType, stateType} from "./store";
 
 let initialState = {
@@ -50,4 +52,10 @@ export const sendMessageAC = () => {
 
 export const setUserProfileAC =(profile:any)=>{
     return{type:"SET_USER_PROFILE",profile} as const
+}
+
+export const getUserProfileThunk=(userId:any)=>(dispatch: Dispatch)=>{
+    usersAPI.getPrpfile(userId).then(response => {
+        dispatch(setUserProfileAC(response.data));
+    });
 }

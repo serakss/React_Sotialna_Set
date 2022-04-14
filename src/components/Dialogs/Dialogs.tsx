@@ -4,21 +4,19 @@ import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
 import {ActionType, stateType} from "../../redux/store";
 import {AppStateType, StoreType} from "../../redux/redux-store";
-import { SuperMessageContainer} from "./Message/MessageContainer";
+import {SuperMessageContainer} from "./Message/MessageContainer";
+import {mapStateToPropsType} from "./DialigsContainer";
+import {Redirect} from "react-router-dom";
 
-type dialogsType ={
-    state: AppStateType
-    dispatch: (action: ActionType) => void
-    store: StoreType
-}
 
-export const Dialogs: React.FC<dialogsType> = (props) => {
+export const Dialogs = (props: mapStateToPropsType) => {
 
+    if (!props.isAuth) return <Redirect to={"/login"}/>;
 
     return (
         <div className={s.dialogs}>
             <DialogItem state={props.state}/>
-           <SuperMessageContainer/>
+            <SuperMessageContainer/>
         </div>
     )
 }

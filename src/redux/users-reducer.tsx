@@ -184,7 +184,7 @@ debugger
 }
 
 export const unFollowThunkCreator = (userId: string) => {
-    debugger
+
     return (dispatch: Dispatch) => {
         dispatch(toggleIsFollowingIsProgress(true, userId))
         usersAPI.unFollow(userId).then(response => {

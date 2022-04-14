@@ -11,6 +11,8 @@ import { StoreType} from "./redux/redux-store";
 import {UsersContainer} from "./components/Users/UsersContainer";
 import {ProfileConnect} from "./components/Profile/ProfileContainer";
 import {HeaderContainer} from "./components/Heder/HederContainer";
+import { Login } from './components/Login/Login';
+import { DialigsContainer } from './components/Dialogs/DialigsContainer';
 
 type appType = {
     store: StoreType
@@ -26,13 +28,10 @@ const App: React.FC<appType> = (props) => {
                 <div className={s.appWrapperContent}>
                     {/*<Route path="/dialogs" component={Dialogs}/>
                 <Route path="/profile" component={Profile}/>*/}
-                    <Route path="/dialogs" render={() => <Dialogs
-                        store={props.store}
-                        state={props.store.getState()}
-                        dispatch={props.store.dispatch}
-                    />}/>
+                    <Route path="/dialogs" render={() => <DialigsContainer/>}/>
                     <Route path="/profile/:userId?" render={() => <ProfileConnect/>}/>
                     <Route path="/users" render={() =><UsersContainer/>}/>
+                    <Route path="/login" render={()=><Login/>}/>
                     {/* <Route path="/news" />
                 <Route path="/music" />
                 <Route path="/settings" />*/}
