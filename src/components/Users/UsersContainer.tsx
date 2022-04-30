@@ -1,7 +1,7 @@
 import React from "react";
 import {connect, MapDispatchToProps} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
-import {Dispatch} from "redux";
+import {compose, Dispatch} from "redux";
 import {
     followAC,
     followThunkCreator,
@@ -17,6 +17,7 @@ import {Users} from "./Users";
 import axios from "axios";
 import {Preloader} from "../common/Preloader/Preloader";
 import {usersAPI} from "../../api/api";
+import { withAuthRedirect } from "../../hoc/withAuthRedirect";
 
 export type mapStateToPropsType = {
     users: AppStateType
@@ -148,4 +149,5 @@ let mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
 }
 
 
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersAPIComponent)
+//export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(withAuthRedirect(UsersAPIComponent))
+export const UsersContainer = compose<React.ComponentType>( connect(mapStateToProps, mapDispatchToProps),withAuthRedirect)(UsersAPIComponent)
