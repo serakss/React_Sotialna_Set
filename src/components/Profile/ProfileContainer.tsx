@@ -3,21 +3,27 @@ import React from "react";
 import {Profile} from "./Profile";
 import axios from "axios";
 import {connect} from "react-redux";
-import {getUserProfileThunk, setUserProfileAC} from "../../redux/profile-reducer";
+import {
+    getUserProfileThunk,
+    getUsersSatatusThunk,
+    setUserProfileAC,
+    updateStatusThunk
+} from "../../redux/profile-reducer";
 import {compose, Dispatch} from "redux";
 import {AppStateType} from "../../redux/redux-store";
 import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
-import { usersAPI } from "../../api/api";
-import { withAuthRedirect } from "../../hoc/withAuthRedirect";
+import {usersAPI} from "../../api/api";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 type mapStateToPropsType = {
     profile: any
-    //isAuth:boolean
+    status: string
 }
 
 type mapDispatchToPropsType = {
-   // setUserProfile: (profile: any) => void
-    getUserProfileThunk:(userId:string)=>void
+    getUserProfileThunk: (userId: string) => void
+    getUsersSatatusThunk: (userId: string) => void
+    updateStatusThunk: (status: string) => void
 }
 
 type PathParamsType = {
@@ -29,7 +35,6 @@ type PropsType = RouteComponentProps<PathParamsType> & ProfileContainerType
 
 type ProfileContainerType = mapStateToPropsType & mapDispatchToPropsType
 
-
 export class ProfileContainer extends React.Component<PropsType> {
     componentDidMount() {
 
@@ -38,11 +43,8 @@ export class ProfileContainer extends React.Component<PropsType> {
             userId = "2";
         }
         this.props.getUserProfileThunk(userId)
-        /*axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId).then(response => {
-            this.props.setUserProfile(response.data);*/
-      /*  usersAPI.getPrpfile(userId).then(response => {
-            this.props.setUserProfile(response.data);
-        });*/
+        this.props.getUsersSatatusThunk(userId)
+
 
     }
 
@@ -50,34 +52,38 @@ export class ProfileContainer extends React.Component<PropsType> {
         //if (!this.props.isAuth )return <Redirect to={"/login"}/>;
         return (
 
-            <Profile {...this.props} profile={this.props.profile}/>
+            <Profile {...this.props} profile={this.props.profile} status={this.props.status} updateStatus={this.props.updateStatusThunk}/>
         )
     }
 }
 
-let mapStateToProps = (state: AppStateType):mapStateToPropsType => (
+let mapStateToProps = (state: AppStateType): mapStateToPropsType => (
     {
         profile: state.profileState.profile,
-        //isAuth: state.auth.isAuth
+        status: state.profileState.status
+
 
     }
 );
 
-let mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
-    return {
-        /*setUserProfile: (profile: any) => {
-            dispatch(setUserProfileAC(profile))
-        }*/
-        getUserProfileThunk:(userId:string)=>{
+let mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => (
+    {
+        getUserProfileThunk: (userId: string) => {
             getUserProfileThunk(userId)(dispatch)
+        },
+        getUsersSatatusThunk: (userId: string) => {
+            getUsersSatatusThunk(userId)(dispatch)
+        },
+        updateStatusThunk: (status: string) => {
+            updateStatusThunk(status)(dispatch)
         }
     }
-}
+)
 
 //let WithUrlDataContainerComponent = withRouter(ProfileContainer)
 //let WithUrlDataContainerComponent = withRouter(withAuthRedirect(ProfileContainer))
 
 //export const ProfileConnect = connect(mapStateToProps, mapDispatchToProps)(WithUrlDataContainerComponent);
-export const ProfileConnect = compose<React.ComponentType>(withRouter,connect(mapStateToProps, mapDispatchToProps),withAuthRedirect)(ProfileContainer)
+export const ProfileConnect = compose<React.ComponentType>(withRouter, connect(mapStateToProps, mapDispatchToProps), withAuthRedirect)(ProfileContainer)
 
 

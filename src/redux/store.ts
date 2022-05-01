@@ -1,6 +1,8 @@
 import React from "react";
 import {addPostAC, dialogsReducer, updateNewPostTextAC} from "./dialogs-reducer";
-import {profileReducer, sendMessageAC, setUserProfileAC, updateNewMessageTextAC} from "./profile-reducer";
+import { profileReducer, sendMessageAC, setStatusAC, setUserProfileAC, updateNewMessageTextAC} from "./profile-reducer";
+
+
 
 /*let rerenderEntireTree = (state: stateType) => {
     console.log("state changed")
@@ -28,8 +30,9 @@ type ChangeNewTextActionType = ReturnType<typeof updateNewPostTextAC>
 type ChangeNewMessageBodyType = ReturnType<typeof updateNewMessageTextAC>
 type SendMessageType = ReturnType<typeof sendMessageAC>
 type setUserProfileType = ReturnType<typeof setUserProfileAC>
+type getUserType = ReturnType<typeof setStatusAC>
 
-export type ActionType = AddPostActionType | ChangeNewTextActionType | ChangeNewMessageBodyType | SendMessageType | setUserProfileType;
+export type ActionType = AddPostActionType | ChangeNewTextActionType | ChangeNewMessageBodyType | SendMessageType | setUserProfileType | getUserType;
 
 export type stateType = typeof state;
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { Dispatch } from "redux";
-import { usersAPI } from "../api/api";
+import {profileAPI, usersAPI } from "../api/api";
 import {ActionType, stateType} from "./store";
 
 let initialState = {
@@ -11,6 +11,7 @@ let initialState = {
     ],
     newPostText: "",
     profile: null,
+    status:""
 }
 
 export const profileReducer = (state = initialState, action: ActionType) => {
@@ -37,6 +38,9 @@ export const profileReducer = (state = initialState, action: ActionType) => {
         case "SET_USER_PROFILE":{
             return {...state,profile:action.profile.photos.large}
         }
+        case "SET_STATUS":{
+            return {...state,status: action.status}
+        }
         default:
             return state
     }
@@ -54,8 +58,26 @@ export const setUserProfileAC =(profile:any)=>{
     return{type:"SET_USER_PROFILE",profile} as const
 }
 
-export const getUserProfileThunk=(userId:any)=>(dispatch: Dispatch)=>{
+export const setStatusAC =(status:string)=>{
+    return {type:"SET_STATUS",status} as const
+}
+
+export const getUserProfileThunk=(userId:string)=>(dispatch: Dispatch)=>{
     usersAPI.getPrpfile(userId).then(response => {
         dispatch(setUserProfileAC(response.data));
     });
 }
+
+export const getUsersSatatusThunk =(userId:string)=>(dispatch: Dispatch)=>{
+ profileAPI.getStatus(userId).then(response =>{
+     dispatch(setStatusAC(response.data))
+ })}
+
+export const updateStatusThunk =(status:string)=>(dispatch: Dispatch)=>{
+    profileAPI.updateStatus(status).then(response=>{
+        if(response.data.resultCode === 0){
+            dispatch(setStatusAC(status))
+        }
+    })
+}
+

@@ -3,23 +3,32 @@ import {useState} from "react"
 
 type profileStatusType = {
     status: string
+    updateStatus: (status: string) => void
 }
 
 
 export const ProfileStatus = (props: profileStatusType) => {
 
-    let [editeMode, setEditeMode] = useState(true)
+    let [editeMode, setEditeMode] = useState(true);
+    let [status, setStatus] = useState(props.status)
 
-    const activateEditMode = ()=> setEditeMode(!editeMode)
+    const activateEditMode = () => {
+        setEditeMode(!editeMode)
+        props.updateStatus(status)
+    }
+
+    const onStatusChange =(e:any)=>{
+     setStatus(e.currentTarget.value)
+    }
 
 
     return <div>
         {editeMode &&
             <div>
-                <span onDoubleClick={activateEditMode}>{props.status}</span>
+                <span onDoubleClick={activateEditMode}>{props.status || "-----"}</span>
             </div>}
         {!editeMode && <div>
-            <input autoFocus={true} onBlur={activateEditMode} value={props.status}/>
+            <input onChange={onStatusChange} autoFocus={true} onBlur={activateEditMode} value={status}/>
         </div>}
     </div>
 }
