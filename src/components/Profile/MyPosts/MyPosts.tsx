@@ -4,14 +4,20 @@ import {Post} from "./Post/Post";
 import {addPostAC, updateNewPostTextAC} from "../../../redux/dialogs-reducer";
 import {ActionType, stateType} from "../../../redux/store";
 import {AppStateType} from "../../../redux/redux-store";
+import {Field, InjectedFormProps, reduxForm } from "redux-form";
 
 
 
 type myPostsType = {
     updateNewPostText:(text:string)=>void
-    addPost:()=>void
+    addPost:(newTextPost:string)=>void
     posts:AppStateType
 }
+
+type FormDataType = {
+    newMessageBody: string
+}
+
 
 export const MyPosts: React.FC<myPostsType> = (props) => {
 
@@ -25,9 +31,9 @@ export const MyPosts: React.FC<myPostsType> = (props) => {
 */
     let newPostElement = React.createRef<HTMLTextAreaElement>();
 
-    let addPost = () => {
-         props.addPost()
-        //props.dispatch(addPostAC())
+    let addNewMessage = (value: FormDataType) => {
+        // alert(value.newMessageBody)
+        props.addPost(value.newMessageBody)
 
     }
     let onPostChange = () => {
@@ -46,12 +52,13 @@ export const MyPosts: React.FC<myPostsType> = (props) => {
         <div className={s.postsBlock}>
             <h3>My posts</h3>
             <div>
-                <div>
+               {/* <div>
                     <textarea ref={newPostElement} value={props.posts.profileState.newPostText} onChange={onPostChange}/>
                 </div>
                 <div>
                     <button onClick={addPost}>Add post</button>
-                </div>
+                </div>*/}
+                <AddMessageFormRedux onSubmit={addNewMessage}/>
                 <div className={s.posts}>
 
                     {props.posts.profileState.postData.map(p => <Post message={p.message} likeCount={p.likesCount}/>)}
@@ -63,3 +70,19 @@ export const MyPosts: React.FC<myPostsType> = (props) => {
         </div>
     )
 }
+
+const AddMessageForm = (props: InjectedFormProps<FormDataType>) => {
+
+
+    return <form onSubmit={props.handleSubmit}>
+        <div>
+            <Field component="textarea" name="newMessageBody" placeholder="Enyer your message"/>
+        </div>
+        <div>
+            <button>Add Post</button>
+        </div>
+    </form>
+
+}
+
+const AddMessageFormRedux = reduxForm<FormDataType>({form: "profileAddNewPostForm"})(AddMessageForm)

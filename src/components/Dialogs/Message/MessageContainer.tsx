@@ -14,16 +14,16 @@ type messageContainerType = {
     store: StoreType
 }
 
-export  const MessageContainer: React.FC<messageContainerType> = (props) => {
+/*export  const MessageContainer: React.FC<messageContainerType> = (props) => {
 
-    /*let messages = [
+    /!*let messages = [
         {id: "1", message: "Hi"},
         {id: "2", message: "How is you it?"},
         {id: "3", message: "Yo"},
         {id: "4", message: "ccccc"},
         {id: "5", message: "tttttt"},
         {id: "6", message: "yyyyyyy"},
-    ]*/
+    ]*!/
     let newMessageBody = props.store.getState().dialogsState.newMessageBody;
 
     let onNewMessageChange = (body: string) => {
@@ -37,7 +37,7 @@ export  const MessageContainer: React.FC<messageContainerType> = (props) => {
         <Message state={props.store.getState()}  onNewMessageChange={onNewMessageChange}
                  onSendMessageClick={onSendMessageClick}/>
     )
-}
+}*/
 
 let mapStateToProps = (state: AppStateType) => {
     return {
@@ -51,8 +51,8 @@ let mapDispatchToProps = (dispatch:Dispatch) => {
         onNewMessageChange:(body:string)=>{
             dispatch(updateNewMessageTextAC(body))
         },
-        onSendMessageClick:()=>{
-            dispatch(sendMessageAC())
+        onSendMessageClick:(newMessage:string)=>{
+            dispatch(sendMessageAC(newMessage))
         }
     }
 }

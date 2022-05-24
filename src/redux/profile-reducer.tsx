@@ -9,7 +9,7 @@ let initialState = {
         {id: "2", message: "It's my first post", likesCount: 5},
         {id: "3", message: "aaaaaaaaaaaaaaa", likesCount: 5},
     ],
-    newPostText: "",
+   // newPostText: "",
     profile: null,
     status:""
 }
@@ -26,8 +26,8 @@ export const profileReducer = (state = initialState, action: ActionType) => {
              return stateCopy*/
             return {
                 ...state,
-                newPostText: "",
-                postData: [...state.postData,{id: "1", message: state.newPostText, likesCount: 12}]
+               // newPostText: "",
+                postData: [...state.postData,{id: "1", message: action.newTextPost, likesCount: 12}]
             }
 
         }
@@ -50,8 +50,8 @@ export const profileReducer = (state = initialState, action: ActionType) => {
 export const updateNewMessageTextAC = (body: string) => {
     return {type: "UPDATE-NEW-MESSAGE-TEXT", body} as const
 }
-export const sendMessageAC = () => {
-    return {type: "SEND-MESSAGE"} as const
+export const sendMessageAC = (newMessage:string) => {
+    return {type: "SEND-MESSAGE", newMessage} as const
 }
 
 export const setUserProfileAC =(profile:any)=>{

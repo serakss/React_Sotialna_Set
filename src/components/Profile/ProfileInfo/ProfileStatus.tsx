@@ -12,6 +12,7 @@ export const ProfileStatus = (props: profileStatusType) => {
     let [editeMode, setEditeMode] = useState(true);
     let [status, setStatus] = useState(props.status)
 
+
     const activateEditMode = () => {
         setEditeMode(!editeMode)
         props.updateStatus(status)
@@ -20,6 +21,9 @@ export const ProfileStatus = (props: profileStatusType) => {
     const onStatusChange =(e:any)=>{
      setStatus(e.currentTarget.value)
     }
+    /*if(status !== props.status){
+        setStatus(props.status)
+    }*/
 
 
     return <div>

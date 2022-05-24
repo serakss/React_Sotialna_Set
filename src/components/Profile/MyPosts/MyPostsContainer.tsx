@@ -58,8 +58,8 @@ let mapDispatchToProps = (dispatch:Dispatch) => {
         updateNewPostText:(text:string)=>{
             dispatch(updateNewPostTextAC(text))
         },
-        addPost:()=>{
-            dispatch(addPostAC())
+        addPost:(newTextPost:string)=>{
+            dispatch(addPostAC(newTextPost))
         }
     }
 }
