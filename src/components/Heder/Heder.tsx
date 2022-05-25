@@ -12,7 +12,7 @@ export const Header = (props: headerPropsType) => {
             <img src="https://ichef.bbci.co.uk/news/640/cpsprodpb/FBD1/production/_115656446_eye1.jpg"/>
 
             <div className={s.loginBlock}>
-                {props.isAuth? props.login :<NavLink to={"/login"}>Login</NavLink>}
+                {props.isAuth? <div>{props.login} <button onClick={props.logout}>Log out</button></div> :<NavLink to={"/login"}>Login</NavLink>}
             </div>
 
         </header>

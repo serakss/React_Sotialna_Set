@@ -2,17 +2,18 @@ import axios from "axios";
 import React from "react";
 import {connect} from "react-redux";
 import {Header} from "./Heder";
-import {setUserDate, setUsersDataThunk} from "../../redux/auth-reducer";
+import {logout, setUserDate, setUsersDataThunk} from "../../redux/auth-reducer";
 import { AppStateType } from "../../redux/redux-store";
 import { authAPI } from "../../api/api";
 
 
 type mapStateToPropsType = {
     isAuth: boolean
-    login: string
+    login: string | null
 }
 export type mapDispatchToPropsType = {
     setUsersDataThunk:()=>void
+    logout:()=>void
 }
 export type headerPropsType = mapStateToPropsType & mapDispatchToPropsType
 
@@ -47,4 +48,4 @@ const MapStateToProps = (state: AppStateType):mapStateToPropsType => ({
 })
 
 
-export const HeaderContainer = connect(MapStateToProps, {setUsersDataThunk})(HeaderContainer1)
+export const HeaderContainer = connect(MapStateToProps, {setUsersDataThunk,logout})(HeaderContainer1)

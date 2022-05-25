@@ -18,6 +18,8 @@ import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 type mapStateToPropsType = {
     profile: any
     status: string
+    isAuth: boolean
+    authorizedUserId: number | null
 }
 
 type mapDispatchToPropsType = {
@@ -40,7 +42,7 @@ export class ProfileContainer extends React.Component<PropsType> {
 
         let userId = this.props.match.params.userId
         if (!userId) {
-            userId = "2";
+            userId =String(this.props.authorizedUserId)
         }
         this.props.getUserProfileThunk(userId)
         this.props.getUsersSatatusThunk(userId)
@@ -52,7 +54,8 @@ export class ProfileContainer extends React.Component<PropsType> {
         //if (!this.props.isAuth )return <Redirect to={"/login"}/>;
         return (
 
-            <Profile {...this.props} profile={this.props.profile} status={this.props.status} updateStatus={this.props.updateStatusThunk}/>
+            <Profile {...this.props} profile={this.props.profile} status={this.props.status}
+                     updateStatus={this.props.updateStatusThunk}/>
         )
     }
 }
@@ -60,8 +63,9 @@ export class ProfileContainer extends React.Component<PropsType> {
 let mapStateToProps = (state: AppStateType): mapStateToPropsType => (
     {
         profile: state.profileState.profile,
-        status: state.profileState.status
-
+        status: state.profileState.status,
+        authorizedUserId: state.auth.id,
+        isAuth: state.auth.isAuth
 
     }
 );

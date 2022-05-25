@@ -5,6 +5,9 @@ import {addPostAC, updateNewPostTextAC} from "../../../redux/dialogs-reducer";
 import {ActionType, stateType} from "../../../redux/store";
 import {AppStateType} from "../../../redux/redux-store";
 import {Field, InjectedFormProps, reduxForm } from "redux-form";
+import {maxLengthCreator, required } from "../../../utils/validators/validators";
+import { Textarea } from "../../common/Preloader/FormsControls/FormsControls";
+
 
 
 
@@ -18,6 +21,7 @@ type FormDataType = {
     newMessageBody: string
 }
 
+const maxLenght10 = maxLengthCreator(10)
 
 export const MyPosts: React.FC<myPostsType> = (props) => {
 
@@ -76,7 +80,7 @@ const AddMessageForm = (props: InjectedFormProps<FormDataType>) => {
 
     return <form onSubmit={props.handleSubmit}>
         <div>
-            <Field component="textarea" name="newMessageBody" placeholder="Enyer your message"/>
+            <Field component={Textarea} name="newMessageBody" placeholder="Enyer your message" validate={[required,maxLenght10]}/>
         </div>
         <div>
             <button>Add Post</button>
