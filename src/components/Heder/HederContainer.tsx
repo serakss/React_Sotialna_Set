@@ -12,7 +12,7 @@ type mapStateToPropsType = {
     login: string | null
 }
 export type mapDispatchToPropsType = {
-    setUsersDataThunk:()=>void
+   /// setUsersDataThunk:()=>void
     logout:()=>void
 }
 export type headerPropsType = mapStateToPropsType & mapDispatchToPropsType
@@ -31,7 +31,7 @@ export class HeaderContainer1 extends React.Component<headerPropsType> {
                 }
             })*/
 
-        this.props.setUsersDataThunk()
+        //this.props.setUsersDataThunk()
     }
 
     render() {
@@ -48,4 +48,4 @@ const MapStateToProps = (state: AppStateType):mapStateToPropsType => ({
 })
 
 
-export const HeaderContainer = connect(MapStateToProps, {setUsersDataThunk,logout})(HeaderContainer1)
+export const HeaderContainer = connect(MapStateToProps, {logout})(HeaderContainer1)

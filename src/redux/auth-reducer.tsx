@@ -7,7 +7,7 @@ import {authAPI} from "../api/api";
 const SET_USER_DATA = "SET_USER_DATA";
 
 
-type setUserDateType = ReturnType<typeof setUserDate>
+export type setUserDateType = ReturnType<typeof setUserDate>
 
 type actionType = setUserDateType;
 
@@ -44,16 +44,19 @@ export const authReducer = (state = initialState, action: actionType): InitialSt
 }
 
 export const setUserDate = (email: string | null, id: number | null, login: string | null, isAuth: boolean) => ({
+
     type: SET_USER_DATA,
     payload: {email, id, login, isAuth} as const
 })
 
 export const setUsersDataThunk = () => (dispatch: Dispatch) => {
+
     authAPI.me().then(response => {
         if (response.data.resultCode === 0) {
             let email = response.data.data.email;
             let id = response.data.data.id;
             let login = response.data.data.login;
+
             dispatch(setUserDate(email, id, login, true))
         }
     })

@@ -5,13 +5,15 @@ import {authReducer} from "./auth-reducer";
 import thunkMiddleware from "redux-thunk";
 import {applyMiddleware, createStore, combineReducers } from "redux";
 import { reducer as formReducer } from 'redux-form'
+import { appReducer } from "./app-reducer";
 
 let reducers = combineReducers({
     dialogsState:dialogsReducer,
    profileState:profileReducer,
     usersPage:usersReducer,
     auth:authReducer,
-    form:formReducer
+    form:formReducer,
+    app: appReducer
 });
 
 export type RytReducerType  = typeof reducers
